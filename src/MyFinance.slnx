@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="MyFinance.Api/MyFinance.Api.csproj" Id="ff251026-58fd-4500-a2b2-ad12b4aba01d" />
+  <Project Path="MyFinance.Application/MyFinance.Application.csproj" Id="fbc1e52e-68bf-4283-9049-688fc363c1a1" />
+  <Project Path="MyFinance.Domain/MyFinance.Domain.csproj" Id="59fe376a-623e-48b4-b9ea-5526a5776ae5" />
+  <Project Path="MyFinance.Infrastructure/MyFinance.Infrastructure.csproj" Id="e07da44b-f2f8-4828-af75-57a361d5abdd" />
+  <Project Path="MyFinance.Shared/MyFinance.Shared.csproj" Id="5996e63a-7fb1-4d87-a6c9-f71f1f2eb4b1" />
+</Solution>
