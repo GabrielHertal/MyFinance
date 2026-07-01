@@ -14,20 +14,27 @@ namespace MyFinance.Infrastructure.Persistence.Configurations
             builder.Property(c => c.Id)
                 .HasColumnType("uuid");
             builder.Property(c => c.Nome)
+                .HasColumnType("varchar(100)")
                 .IsRequired()
                 .HasMaxLength(100);
             builder.Property(c => c.Ativo)
+                .HasColumnType("boolean")
                 .IsRequired()
                 .HasDefaultValue(true);
             builder.Property(c => c.DataCriacao)
+                .HasColumnType("timestamp")
                 .HasDefaultValue(DateTime.UtcNow);
             builder.Property(c => c.Descricao)
+                .HasColumnType("varchar(300)")
                 .HasMaxLength(300);
-            builder.HasMany<ApplicationUser>()
-                .WithOne()
-                .HasForeignKey(c => c.Id);
+            //Foregn Key
             builder.Property(c => c.UsuarioId)
+                .HasColumnType("uuid")
                 .IsRequired();
+            builder.HasOne<ApplicationUser>()
+                .WithMany()
+                .HasForeignKey(c => c.UsuarioId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

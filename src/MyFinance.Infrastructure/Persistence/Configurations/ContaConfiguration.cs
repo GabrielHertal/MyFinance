@@ -23,6 +23,7 @@ namespace MyFinance.Infrastructure.Persistence.Configurations
                 .HasColumnType("decimal(15,2)")
                 .HasDefaultValue(0.00);
             builder.Property(c => c.Tipo)
+                .HasComment("Tipo de conta: 1 - Saldo_Conta, 2 - Poupança, 3 - Dinheiro, 4 - Investimentos")
                 .HasColumnType("int")
                 .HasConversion<int>()
                 .IsRequired();
@@ -33,11 +34,11 @@ namespace MyFinance.Infrastructure.Persistence.Configurations
             builder.Property(c => c.DataCriacao)
                 .HasColumnType("timestamp")
                 .HasDefaultValue(DateTime.UtcNow);
-            builder.HasMany<ApplicationUser>()
-                .WithOne()
-                .HasForeignKey(c => c.Id);
-            builder.Property(c => c.UsuarioId)
-                .IsRequired();
+            //Foregn Key
+            builder.HasOne<ApplicationUser>()
+                .WithMany()
+                .HasForeignKey(c => c.UsuarioId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
