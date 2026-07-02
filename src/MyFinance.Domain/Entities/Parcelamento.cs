@@ -5,6 +5,7 @@ namespace MyFinance.Domain.Entities
     public class Parcelamento : EntitidadeAuditavel
     {
         public string Nome { get; private set; } = default!;
+        public Guid UsuarioId { get; private set; }
         public decimal Valor_Total { get; private set; }
         public int QuantidadeParcelas { get; private set; }
         public DateTime DataInicio { get; private set; }

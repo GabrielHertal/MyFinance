@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <Folder Include="Services\" />
-    <Folder Include="Repositories\" />
     <Folder Include="Persistence\Migrations\" />
     <Folder Include="Persistence\Seed\" />
   </ItemGroup>
@@ -33,6 +32,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\MyFinance.Domain\MyFinance.Domain.csproj" />
+	<ProjectReference Include="..\MyFinance.Application\MyFinance.Application.csproj" />
   </ItemGroup>
 
 </Project>
