@@ -8,6 +8,17 @@ namespace MyFinance.Domain.Entities
         public string Banco { get; private set; } = string.Empty;
         public string Numero_Final { get; private set; } = string.Empty;
         public Guid UsuarioId { get; private set; }
+        public bool Ativo { get; private set; } = true;
+        public void Ativar()
+        {
+            Ativo = true;
+            AtualizarDataAtualizacao();
+        }
+        public void Desativar()
+        {
+            Ativo = false;
+            AtualizarDataAtualizacao();
+        }
         public Cartao(string nome, string banco, string numeroFinal, Guid usuarioId)
         {
             if (banco == string.Empty)
@@ -30,6 +41,7 @@ namespace MyFinance.Domain.Entities
             Banco = banco;
             UsuarioId = usuarioId;
             Numero_Final = numeroFinal;
+            Ativo = true;
         }
         protected Cartao()
         { 

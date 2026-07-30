@@ -9,7 +9,7 @@ namespace MyFinance.Infrastructure.Repositories
         public ContaRepository(MyFinanceDbContext context) : base(context)
         {
         }
-        public async Task<IEnumerable<Conta>> GetContasAsync()
+        public async Task<IEnumerable<Conta>> GetAllContasAsync()
         {
             return await GetAllAsync();
         }
@@ -27,7 +27,17 @@ namespace MyFinance.Infrastructure.Repositories
             var conta = await GetByIdAsync(id);
             if (conta != null)
             {
-                await RemoveAsync(conta);
+                conta.Desativar();
+                await UpdateAsync(conta);
+            }
+        }
+        public async Task ActivateContaAsync(Guid id)
+        {
+            var conta = await GetByIdAsync(id);
+            if(conta != null)
+            {
+                conta.Ativar();
+                await UpdateAsync(conta);
             }
         }
         public async Task UpdateContaAsync(Conta conta)
