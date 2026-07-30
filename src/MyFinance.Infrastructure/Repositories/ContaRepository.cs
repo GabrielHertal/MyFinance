@@ -1,5 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
-using MyFinance.Application.Interfaces.Repositories;
+﻿using MyFinance.Application.Interfaces.Repositories;
 using MyFinance.Domain.Entities;
 using MyFinance.Infrastructure.Persistence.Context;
 
