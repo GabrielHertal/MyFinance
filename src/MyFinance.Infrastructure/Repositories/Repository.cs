@@ -14,33 +14,86 @@ namespace MyFinance.Infrastructure.Repositories
         }
         public async Task CreateAsync(T entity)
         {
-            await _dbContext.Set<T>().AddAsync(entity);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                await _dbContext.Set<T>().AddAsync(entity);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch
+            {
+                throw;
+            }
         }
         public async Task RemoveAsync(T entity)
         {
-            _dbContext.Set<T>().Remove(entity);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                _dbContext.Set<T>().Remove(entity);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch
+            {
+                throw;
+            }
         }
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await _dbContext.Set<T>().ToListAsync();
+            try
+            {
+                return await _dbContext.Set<T>().ToListAsync();
+            }
+            catch
+            {
+                throw;
+            }
         }
         public async Task<T?> GetByIdAsync(Guid id)
         {
-            return await _dbContext.Set<T>().FindAsync(id);
+            try
+            {
+                return await _dbContext.Set<T>().FindAsync(id);
+            }
+            catch
+            {
+                throw;
+            }
         }
         public async Task UpdateAsync(T entity)
         {
-            _dbContext.Set<T>().Update(entity);
-            await _dbContext.SaveChangesAsync();
+            try
+            {
+                _dbContext.Set<T>().Update(entity);
+                await _dbContext.SaveChangesAsync();
+            }
+            catch
+            {
+                throw;
+            }
+        }
+        public async Task DeleteAsync(T Entity)
+        {
+            try
+            {
+                await _dbContext.Set<T>().ExecuteDeleteAsync();
+            }
+            catch
+            {
+                throw;
+            }
         }
         public async Task<IEnumerable<T>> GetByUsuarioIdAsync(Guid usuarioId)
         {
-            // Usa EF.Property para acessar a propriedade UsuarioId dinamicamente
-            return await _dbContext.Set<T>()
-                .Where(e => EF.Property<Guid>(e, "UsuarioId") == usuarioId)
-                .ToListAsync();
+            try
+            {
+                // Usa EF.Property para acessar a propriedade UsuarioId dinamicamente
+                return await _dbContext.Set<T>()
+                    .Where(e => EF.Property<Guid>(e, "UsuarioId") == usuarioId)
+                    .ToListAsync();
+            }
+            catch
+            {
+                throw;
+            }
         }
     }
 }

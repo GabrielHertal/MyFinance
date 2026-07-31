@@ -7,9 +7,10 @@ namespace MyFinance.Domain.Entities
         public string Nome { get; private set; } = default!;
         public Guid UsuarioId { get; private set; }
         public decimal Valor_Total { get; private set; }
+        public bool Pago { get; private set; }
         public int QuantidadeParcelas { get; private set; }
         public DateTime DataInicio { get; private set; }
-        public Parcelamento(string nome, decimal valor_total, int quantidadeParcelas, DateTime dataInicio)
+        public Parcelamento(string nome, decimal valor_total, int quantidadeParcelas, DateTime dataInicio, bool pago)
         {
             if (string.IsNullOrWhiteSpace(nome))
                 throw new ArgumentException("O nome do parcelamento não pode ser vazio!", nameof(nome));
@@ -23,8 +24,9 @@ namespace MyFinance.Domain.Entities
             Valor_Total = valor_total;
             QuantidadeParcelas = quantidadeParcelas;
             DataInicio = dataInicio;
+            Pago = pago;
         }
-        public void Atualizar(string nome, decimal valor_total, int quantidadeParcelas, DateTime dataInicio)
+        public void Atualizar(string nome, decimal valor_total, int quantidadeParcelas, DateTime dataInicio, bool pago)
         {
             if (string.IsNullOrWhiteSpace(nome))
                 throw new ArgumentException("O nome do parcelamento não pode ser vazio!", nameof(nome));
@@ -38,6 +40,7 @@ namespace MyFinance.Domain.Entities
             Valor_Total = valor_total;
             QuantidadeParcelas = quantidadeParcelas;
             DataInicio = dataInicio;
+            Pago = pago;   
             AtualizarDataAtualizacao();
         }
         protected Parcelamento()

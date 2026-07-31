@@ -24,6 +24,9 @@ namespace MyFinance.Infrastructure.Persistence.Configurations
             builder.Property(p => p.DataInicio)
                 .HasColumnType("timestamp")
                 .IsRequired();
+            builder.Property(p => p.Pago)
+                .IsRequired()
+                .HasColumnType("boolean");
             //Foregn Key
             builder.HasOne<ApplicationUser>()
                 .WithMany()

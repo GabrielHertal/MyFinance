@@ -1,7 +1,6 @@
 ﻿using MyFinance.Application.Interfaces.Repositories;
 using MyFinance.Domain.Entities;
 using MyFinance.Infrastructure.Persistence.Context;
-using System.Runtime.InteropServices;
 
 namespace MyFinance.Infrastructure.Repositories
 {
@@ -17,7 +16,7 @@ namespace MyFinance.Infrastructure.Repositories
         public async Task<IEnumerable<Cartao>> GetCartaoByIdAsync(Guid id)
         {
             var cartao = await GetByIdAsync(id);
-            return cartao != null ? new[] {cartao} : Enumerable.Empty<Cartao>();
+            return cartao != null ? new[] { cartao } : Enumerable.Empty<Cartao>();
         }
         public async Task CreateCartaoAsync(Cartao cartao)
         {
@@ -35,7 +34,7 @@ namespace MyFinance.Infrastructure.Repositories
         public async Task ActivateCartaoAsync(Guid id)
         {
             var cartao = await GetByIdAsync(id);
-            if(cartao != null)
+            if (cartao != null)
             {
                 cartao.Ativar();
                 await UpdateAsync(cartao);
