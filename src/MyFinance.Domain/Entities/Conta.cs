@@ -36,6 +36,22 @@ namespace MyFinance.Domain.Entities
             Saldo -= value;
             AtualizarDataAtualizacao();
         }
+        public void AtualizarNome(string nome)
+        {
+            if (string.IsNullOrWhiteSpace(nome))
+                throw new ArgumentException("O nome da conta não pode ser vazio!", nameof(nome));
+            Nome = nome;
+            AtualizarDataAtualizacao();
+        }
+        public void Investir(decimal value)
+        {
+            if (value <= 0)
+                throw new ArgumentException("O valor do investimento deve ser positivo!", nameof(value));
+            if (value > Saldo)
+                throw new InvalidOperationException("Saldo insuficiente para realizar o investimento!");
+            Saldo -= value;
+            AtualizarDataAtualizacao();
+        }
         public Conta(Guid usuarioId, string nome, decimal saldo, TipoConta tipoConta)
         {
             if (usuarioId == Guid.Empty)

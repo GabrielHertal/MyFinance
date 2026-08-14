@@ -21,6 +21,7 @@ namespace MyFinance.Infrastructure
             services.AddScoped<ICategoriaRepository, CategoriaRepository>();
             services.AddScoped<ICartaoRepository, CartaoRepository>();
             services.AddScoped<IParcelamentoRepository, ParcelamentoRepository>();
+            services.AddScoped<ITransacaoRepository, TransacaoRepository>();
             return services;
         }
     }

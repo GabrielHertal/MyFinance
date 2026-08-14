@@ -7,11 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MyFinance.Domain\MyFinance.Domain.csproj" />
+    <Compile Remove="DTO\**" />
+    <EmbeddedResource Remove="DTO\**" />
+    <None Remove="DTO\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="DTO\" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0" />
+    <ProjectReference Include="..\MyFinance.Domain\MyFinance.Domain.csproj" />
   </ItemGroup>
 
 </Project>
