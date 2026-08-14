@@ -14,22 +14,14 @@ namespace MyFinance.Infrastructure.Repositories
         }
         public async Task CreateAsync(T entity)
         {
-            try
-            {
-                await _dbContext.Set<T>().AddAsync(entity);
-                await _dbContext.SaveChangesAsync();
-            }
-            catch
-            {
-                throw;
-            }
+            await _dbContext.Set<T>().AddAsync(entity);
         }
-        public async Task RemoveAsync(T entity)
+        public Task RemoveAsync(T entity)
         {
             try
             {
                 _dbContext.Set<T>().Remove(entity);
-                await _dbContext.SaveChangesAsync();
+                return Task.CompletedTask;
             }
             catch
             {
@@ -58,12 +50,12 @@ namespace MyFinance.Infrastructure.Repositories
                 throw;
             }
         }
-        public async Task UpdateAsync(T entity)
+        public Task UpdateAsync(T entity)
         {
             try
             {
                 _dbContext.Set<T>().Update(entity);
-                await _dbContext.SaveChangesAsync();
+                return Task.CompletedTask;
             }
             catch
             {
