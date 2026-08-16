@@ -5,6 +5,7 @@
     using MyFinance.Application.Interfaces.Services;
     using MyFinance.Domain.Entities;
     using MyFinance.Domain.Enums;
+    using MyFinance.Shared.Results;
 
     public class TransacaoService : ITransacaoService
     {
@@ -19,15 +20,16 @@
             _unitofWork = unitofWork;
         }
 
-        public async Task CriarAsync(CriarTransacaoRequest request,CancellationToken cancellationToken = default)
+        public async Task<Result<Guid>> CriarAsync(CriarTransacaoRequest request,CancellationToken cancellationToken = default)
         {
             ArgumentNullException.ThrowIfNull(request);
-            var conta = await _contaRepository.GetByIdAsync(request.ContaId)
-                ?? throw new KeyNotFoundException("A conta informada não foi encontrada.");
+            var conta = await _contaRepository.GetByIdAsync(request.ContaId);
+            if (conta is null)
+                return Error.NotFound("A conta informada não foi encontrada.");
             if (!conta.Ativo)
-                throw new InvalidOperationException("Não é possível criar uma transação para uma conta inativa.");
+                return new Error("inactive_account", "Não é possível criar uma transação para uma conta inativa.");
             if (conta.UsuarioId != request.UsuarioId)
-                throw new InvalidOperationException("A conta informada não pertence ao usuário da transação.");
+                return Error.Forbidden("A conta informada não pertence ao usuário da transação.");
             var transacao = new Transacao(request.ContaId,
                                           request.CategoriaId,
                                           request.UsuarioId,
@@ -50,11 +52,26 @@
                     conta.Investir(request.Valor);
                     break;
                 default:
-                    throw new NotSupportedException("O tipo de transação informado não possui suporte.");
+                    return Error.Validation("O tipo de transação informado não possui suporte.");
             }
             await _transacaoRepository.CreateAsync(transacao);
             await _contaRepository.UpdateAsync(conta);
             await _unitofWork.SaveChangesAsync(cancellationToken);
+            return transacao.Id;
+        }
+
+        public async Task<Result<IReadOnlyList<TransacaoDto>>> ListarAsync(
+            Guid usuarioId,
+            CancellationToken cancellationToken = default)
+        {
+            if (usuarioId == Guid.Empty)
+                return Error.Validation("O usuário deve ser informado.");
+
+            var transacoes = await _transacaoRepository.ListarAsync(usuarioId, cancellationToken);
+            var items = transacoes.Select(x => new TransacaoDto(
+                x.Id, x.ContaId, x.CategoriaId, x.Descricao, x.Valor, x.Tipo,
+                x.DataTransacao, x.DataPagamento, x.Status)).ToList();
+            return items;
         }
     }
 }

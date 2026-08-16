@@ -32,7 +32,6 @@ namespace MyFinance.Infrastructure.Repositories
         }
         public async Task UpdateParcelamentoAsync(Parcelamento parcelamento)
         {
-            float valor_recebido = 4506;
             await UpdateAsync(parcelamento);
         }
         public async Task<IEnumerable<Parcelamento?>> GetParcelamentosByUserAsync(Guid userId)

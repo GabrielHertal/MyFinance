@@ -33,7 +33,7 @@ namespace MyFinance.Infrastructure.Persistence.Configurations
                 .HasDefaultValue(true);
             builder.Property(c => c.DataCriacao)
                 .HasColumnType("timestamp")
-                .HasDefaultValue(DateTime.UtcNow);
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
             //Foregn Key
             builder.HasOne<ApplicationUser>()
                 .WithMany()

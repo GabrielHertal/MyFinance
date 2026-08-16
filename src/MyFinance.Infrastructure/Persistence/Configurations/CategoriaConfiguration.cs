@@ -23,7 +23,7 @@ namespace MyFinance.Infrastructure.Persistence.Configurations
                 .HasDefaultValue(true);
             builder.Property(c => c.DataCriacao)
                 .HasColumnType("timestamp")
-                .HasDefaultValue(DateTime.UtcNow);
+                .HasDefaultValueSql("CURRENT_TIMESTAMP");
             builder.Property(c => c.Descricao)
                 .HasColumnType("varchar(300)")
                 .HasMaxLength(300);

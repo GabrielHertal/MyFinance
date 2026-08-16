@@ -15,6 +15,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.0" />
     <ProjectReference Include="..\MyFinance.Domain\MyFinance.Domain.csproj" />
+    <ProjectReference Include="..\MyFinance.Shared\MyFinance.Shared.csproj" />
   </ItemGroup>
 
 </Project>

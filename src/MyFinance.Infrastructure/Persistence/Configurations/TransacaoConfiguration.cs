@@ -67,6 +67,10 @@ namespace MyFinance.Infrastructure.Persistence.Configurations
                 .WithMany()
                 .HasForeignKey(t => t.CategoriaId)
                 .OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne<Parcelamento>()
+                .WithMany()
+                .HasForeignKey(t => t.ParcelaId)
+                .OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
