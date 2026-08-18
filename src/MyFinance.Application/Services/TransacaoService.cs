@@ -1,12 +1,12 @@
-﻿namespace MyFinance.Application.Services
-{
-    using MyFinance.Application.DTOs;
-    using MyFinance.Application.Interfaces.Repositories;
-    using MyFinance.Application.Interfaces.Services;
-    using MyFinance.Domain.Entities;
-    using MyFinance.Domain.Enums;
-    using MyFinance.Shared.Results;
+﻿using MyFinance.Application.DTOs;
+using MyFinance.Application.Interfaces.Repositories;
+using MyFinance.Application.Interfaces.Services;
+using MyFinance.Domain.Entities;
+using MyFinance.Domain.Enums;
+using MyFinance.Shared.Results;
 
+namespace MyFinance.Application.Services
+{
     public class TransacaoService : ITransacaoService
     {
         private readonly ITransacaoRepository _transacaoRepository;

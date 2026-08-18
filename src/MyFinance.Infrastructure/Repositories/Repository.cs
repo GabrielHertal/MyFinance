@@ -14,7 +14,14 @@ namespace MyFinance.Infrastructure.Repositories
         }
         public async Task CreateAsync(T entity)
         {
-            await _dbContext.Set<T>().AddAsync(entity);
+            try
+            {
+                await _dbContext.Set<T>().AddAsync(entity);
+            }
+            catch
+            {
+                throw;
+            }
         }
         public Task RemoveAsync(T entity)
         {
