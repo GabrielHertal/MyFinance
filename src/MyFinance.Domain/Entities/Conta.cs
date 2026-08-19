@@ -52,6 +52,13 @@ namespace MyFinance.Domain.Entities
             Saldo -= value;
             AtualizarDataAtualizacao();
         }
+        public void AlteraTipoConta(TipoConta tipoConta)
+        {
+            if(tipoConta == Tipo)
+                throw new ArgumentException("O tipo da conta já é o mesmo!", nameof(tipoConta));
+            Tipo = tipoConta;
+            AtualizarDataAtualizacao();
+        }
         public Conta(Guid usuarioId, string nome, decimal saldo, TipoConta tipoConta)
         {
             if (usuarioId == Guid.Empty)
@@ -64,7 +71,6 @@ namespace MyFinance.Domain.Entities
             Nome = nome;
             Saldo = saldo;
             Tipo = tipoConta;
-            Ativo = true;
         }
         protected Conta()
         {

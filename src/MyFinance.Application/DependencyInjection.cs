@@ -9,6 +9,8 @@ namespace MyFinance.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddScoped<ITransacaoService, TransacaoService>();
+            services.AddScoped<IContaService, ContaService>();
+            services.AddScoped<ICategoriaService, CategoriaService>();
 
             return services;
         }

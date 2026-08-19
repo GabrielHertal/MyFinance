@@ -13,10 +13,12 @@ namespace MyFinance.Infrastructure.Repositories
         {
             return await GetAllAsync();
         }
-        public async Task<IEnumerable<Conta>> GetContaByIdAsync(Guid id)
+        public async Task<Conta> GetContaByIdAsync(Guid id)
         {
             var conta = await GetByIdAsync(id);
-            return conta != null ? new[] { conta } : Enumerable.Empty<Conta>();
+            if (conta == null)
+                throw new KeyNotFoundException($"Conta com id {id} não encontrada.");
+            return conta;
         }
         public async Task CreateContaAsync(Conta conta)
         {
@@ -44,7 +46,7 @@ namespace MyFinance.Infrastructure.Repositories
         {
             await UpdateAsync(conta);
         }
-        public async Task<IEnumerable<Conta?>> GetContasByUserAsync(Guid userId)
+        public async Task<IEnumerable<Conta>> GetContasByUserAsync(Guid userId)
         {
             return await GetByUsuarioIdAsync(userId);
         }

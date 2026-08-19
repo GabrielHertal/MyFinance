@@ -13,10 +13,11 @@ namespace MyFinance.Infrastructure.Repositories
         {
             return await GetAllAsync();
         }
-        public async Task<IEnumerable<Categoria>> GetCategoriaByIdAsync(Guid id)
+        public async Task<Categoria> GetCategoriaByIdAsync(Guid id)
         {
-            var categoria = await GetByIdAsync(id);
-            return categoria != null ? new[] { categoria } : Enumerable.Empty<Categoria>();
+            var categoria = await GetByIdAsync(id); 
+            ArgumentNullException.ThrowIfNull(categoria, nameof(categoria));
+            return categoria;
         }
         public async Task CreateCategoriaAsync(Categoria categoria)
         {

@@ -1,4 +1,5 @@
 using System.Globalization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using MyFinance.Application.DTOs;
@@ -23,18 +24,19 @@ public sealed class AuthController : ControllerBase
         _userManager = userManager;
         _tokenService = tokenService;
     }
-
+    [AllowAnonymous]
     [HttpPost("register")]
     public async Task<IActionResult> Register(RegisterRequest request)
     {
-        var user = new ApplicationUser { Nome = request.Nome, Email = request.Email, UserName = request.Email };
+        var user = new ApplicationUser { Nome = request.Nome, Email = request.Email, UserName = request.Email};
         var result = await _userManager.CreateAsync(user, request.Password);
+        await _userManager.AddToRoleAsync(user, "User");
         if (!result.Succeeded)
             return BadRequest(new { errors = result.Errors.Select(x => new { x.Code, x.Description }) });
         var token = await CreateAndStoreTokensAsync(user);
         return Created(string.Empty, new { user.Id, token });
     }
-
+    [AllowAnonymous]
     [HttpPost("login")]
     public async Task<IActionResult> Login(LoginRequest request)
     {
@@ -44,7 +46,7 @@ public sealed class AuthController : ControllerBase
 
         return Ok(await CreateAndStoreTokensAsync(user));
     }
-
+    [AllowAnonymous]
     [HttpPost("refresh")]
     public async Task<IActionResult> Refresh(RefreshTokenRequest request)
     {
@@ -63,7 +65,7 @@ public sealed class AuthController : ControllerBase
 
         return Ok(await CreateAndStoreTokensAsync(user));
     }
-
+    [Authorize]
     [HttpPost("revoke/{userId:guid}")]
     public async Task<IActionResult> Revoke(Guid userId)
     {
