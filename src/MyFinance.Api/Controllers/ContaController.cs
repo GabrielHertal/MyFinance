@@ -8,7 +8,7 @@ namespace MyFinance.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(Roles = "Admin,User")]
     public class ContaController : ControllerBase
     {
         private readonly IContaService _contaService;
@@ -17,7 +17,6 @@ namespace MyFinance.Api.Controllers
         {
             _contaService = contaService;
         }
-        [Authorize(Roles = "Admin,User")]
         [HttpPost("Create")]
         public async Task<IActionResult> CreateConta([FromBody] CriarContaRequest request, CancellationToken cancellationToken)
         {
@@ -26,7 +25,6 @@ namespace MyFinance.Api.Controllers
                 return Created(string.Empty, new { ContaId = result.Value });
             return BadRequest(new { Erro = result.Errors.Select(x => new { x.Code, x.Message }) });
         }
-        [Authorize(Roles = "Admin,User")]
         [HttpGet("GetAll")]
         public async Task<IActionResult> GetAllContas([FromBody]Guid UserId, CancellationToken cancellationToken)
         {
@@ -35,7 +33,6 @@ namespace MyFinance.Api.Controllers
                 return Ok(result.Value);
             return BadRequest(new { Erro = result.Errors.Select(x => new { x.Code, x.Message }) });
         }
-        [Authorize(Roles = "Admin,User")]
         [HttpGet("GetById")]
         public async Task<IActionResult> GetContaById([FromBody] Guid ContaId, CancellationToken cancellationToken)
         {
@@ -44,7 +41,6 @@ namespace MyFinance.Api.Controllers
                 return Ok(result.Value);
             return BadRequest(new { Erro = result.Errors.Select(x => new { x.Code, x.Message }) });
         }
-        [Authorize(Roles = "Admin,User")]
         [HttpGet("GetByUser")]
         public async Task<IActionResult> GetContasByUser([FromBody] Guid UserId, CancellationToken cancellationToken)
         {
@@ -53,7 +49,6 @@ namespace MyFinance.Api.Controllers
                 return Ok(result.Value);
             return BadRequest(new { Erro = result.Errors.Select(x => new { x.Code, x.Message }) });
         }
-        [Authorize(Roles = "Admin,User")]
         [HttpPut("Activate")]
         public async Task<IActionResult> ActivateConta([FromBody] Guid ContaId, CancellationToken cancellationToken)
         {
@@ -62,7 +57,6 @@ namespace MyFinance.Api.Controllers
                 return Ok(result.IsSuccess);
             return BadRequest(new { Erro = result.Errors.Select(x => new { x.Code, x.Message }) });
         }
-        [Authorize(Roles = "Admin,User")]
         [HttpPut("Update")]
         public async Task<IActionResult> UpdateConta([FromBody] ContaDto request, CancellationToken cancellationToken)
         {
@@ -71,7 +65,6 @@ namespace MyFinance.Api.Controllers
                 return Ok(result.IsSuccess);
             return BadRequest(new { Erro = result.Errors.Select(x => new { x.Code, x.Message }) });
         }
-        [Authorize(Roles = "Admin,User")]
         [HttpDelete("Delete")]
         public async Task<IActionResult> DeleteConta([FromBody] Guid ContaId, CancellationToken cancellationToken)
         {

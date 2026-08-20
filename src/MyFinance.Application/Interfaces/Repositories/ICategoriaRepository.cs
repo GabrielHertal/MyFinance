@@ -10,5 +10,6 @@ namespace MyFinance.Application.Interfaces.Repositories
         Task<IEnumerable<Categoria?>> GetCategoriasByUserAsync(Guid id);
         Task UpdateCategoriaAsync(Categoria categoria);
         Task DeleteCategoriaAsync(Guid id);
+        Task ActivateCategoriaAsync(Guid id);
     }
 }

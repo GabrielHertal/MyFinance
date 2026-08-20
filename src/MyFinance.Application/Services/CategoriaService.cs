@@ -65,7 +65,7 @@ namespace MyFinance.Application.Services
             try
             {
                 var categorias = await _categoriaRepository.GetCategoriasByUserAsync(usuarioId);
-                var categoriasDto = categorias.Select(c => new CategoriaDto(c.Id, c.Nome, c.Descricao, c.UsuarioId, c.Ativo)).ToList();
+                var categoriasDto = categorias.Select(c => new CategoriaDto(c!.Id, c.Nome, c.Descricao, c.UsuarioId, c.Ativo)).ToList();
                 return Result<IReadOnlyList<CategoriaDto>>.Success(categoriasDto);
             }
             catch
@@ -81,7 +81,7 @@ namespace MyFinance.Application.Services
             if (categoria == null) return Result.Failure(Error.NotFound("Categoria não encontrada"));
             categoria.Atualizar(request.nome, request.descricao);
             categoria.Ativo = request.Ativo;
-            if(request.Ativo)
+            if (request.Ativo)
             {
                 categoria.Ativar();
             }
@@ -106,7 +106,23 @@ namespace MyFinance.Application.Services
             if (categoria == null) return Result.Failure(Error.NotFound("Categoria não encontrada"));
             try
             {
-                await _categoriaRepository.DeleteCategoriaAsync(categoriaId);
+                categoria.Desativar();
+                await _unitOfWork.SaveChangesAsync(cancellationToken);
+                return Result.Success();
+            }
+            catch
+            {
+                return Result.Failure(Error.Unexpected());
+                throw;
+            }
+        }
+        public async Task<Result> ActivateCategoriaAsync(Guid categoriaId, CancellationToken cancellationToken = default)
+        {
+            var categoria = await _categoriaRepository.GetCategoriaByIdAsync(categoriaId);
+            if (categoria == null) return Result.Failure(Error.NotFound("Categoria não encontrada"));
+            try
+            {
+                categoria.Ativar();
                 await _unitOfWork.SaveChangesAsync(cancellationToken);
                 return Result.Success();
             }

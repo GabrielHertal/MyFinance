@@ -11,5 +11,6 @@ namespace MyFinance.Application.Interfaces.Services
         Task<Result<IReadOnlyList<CategoriaDto>>> GetCategoriasByUserAsync(Guid usuarioId, CancellationToken cancellationToken = default);
         Task<Result> UpdateCategoriaAsync(CategoriaDto request, CancellationToken cancellationToken = default);
         Task<Result> DeleteCategoriaAsync(Guid categoriaId, CancellationToken cancellationToken = default);
+        Task<Result> ActivateCategoriaAsync(Guid categoriaId, CancellationToken cancellationToken = default);
     }
 }
