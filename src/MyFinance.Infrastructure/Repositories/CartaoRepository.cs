@@ -13,10 +13,11 @@ namespace MyFinance.Infrastructure.Repositories
         {
             return await GetAllAsync();
         }
-        public async Task<IEnumerable<Cartao>> GetCartaoByIdAsync(Guid id)
+        public async Task<Cartao> GetCartaoByIdAsync(Guid id)
         {
             var cartao = await GetByIdAsync(id);
-            return cartao != null ? new[] { cartao } : Enumerable.Empty<Cartao>();
+            if(cartao == null) throw new ArgumentNullException("Cartão não encontrado.");
+            return cartao;
         }
         public async Task CreateCartaoAsync(Cartao cartao)
         {
@@ -44,7 +45,7 @@ namespace MyFinance.Infrastructure.Repositories
         {
             await UpdateAsync(cartao);
         }
-        public async Task<IEnumerable<Cartao?>> GetCartaoByUserId(Guid userId)
+        public async Task<IEnumerable<Cartao?>> GetCartaoByUserIdAsync(Guid userId)
         {
             return await GetByUsuarioIdAsync(userId);
         }

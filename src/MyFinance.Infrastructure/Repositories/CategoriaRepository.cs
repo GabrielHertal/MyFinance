@@ -28,7 +28,17 @@ namespace MyFinance.Infrastructure.Repositories
             var categoria = await GetByIdAsync(id);
             if(categoria != null)
             {
-                await RemoveAsync(categoria);
+                categoria.Desativar();
+                await UpdateAsync(categoria);
+            }
+        }
+        public async Task ActivateCategoriaAsync(Guid id)
+        {
+            var categoria = await GetByIdAsync(id);
+            if (categoria != null)
+            {
+                categoria.Ativar();
+                await UpdateAsync(categoria);
             }
         }
         public async Task UpdateCategoriaAsync(Categoria categoria)
