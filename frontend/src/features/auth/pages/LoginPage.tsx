@@ -1,11 +1,45 @@
-import { useState, type FormEvent } from "react"
+import { useState} from "react"
+import { Login } from "../../../api/Auth/api"
+import { useNavigate } from "react-router-dom";
+
 export function Auth () {
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState<Error | null>(null);
+    const navigate = useNavigate();
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
-        console.log({ email, password });
+    const handleSubmit = async () => {
+        setLoading(true);
+        setError(null);
+        try
+        {
+            const response = await Login(email,password);
+            if(response.status === 401)
+            {
+                alert("Usuário ou senha inválidos!");
+                return;
+            }
+            if(response.token === undefined)
+            {
+                alert("Erro ao realizar login!");
+                return; 
+            }
+            localStorage.setItem("AuthToken", response.token);
+        }
+        catch(erro)
+        {
+            if(erro instanceof Error){
+                setError(erro);
+            }
+            console.error(error);
+            setLoading(false);
+        }
+        finally
+        {
+            setLoading(true);
+            navigate("/");
+        }
     }
 
     return (
@@ -33,9 +67,15 @@ export function Auth () {
                             onChange={(e) => setPassword(e.target.value)}
                         />
                     </div>
-                    <button type="submit" className="btn btn-primary w-100">Login</button>
+                    <button 
+                        type="submit" 
+                        className="btn btn-primary w-100" 
+                        disabled={loading}> {loading? "Entrando..." : "Entrar"}    
+                    </button>
                 </form>
             </div>
         </main>
     )
 }
+
+export default Auth;

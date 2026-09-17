@@ -1,8 +1,9 @@
 {
   "name": "myfinance-frontend",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
+  "description": "Esse projeto, o front-end, me faz lembrar o por que eu odeio mexer com front-end... pago meus pecados mexendo nisso",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
