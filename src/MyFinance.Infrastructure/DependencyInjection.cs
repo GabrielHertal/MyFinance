@@ -51,6 +51,15 @@ namespace MyFinance.Infrastructure
                         ClockSkew = TimeSpan.FromSeconds(30)
                     };
                 });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Frontend", policy =>
+                {
+                    policy.WithOrigins("http://localhost:5173")
+                          .AllowAnyHeader()
+                          .AllowAnyMethod();
+                });
+            });
             services.AddAuthorization();
             services.AddScoped<ITokenService, JwtTokenService>();
             services.AddScoped<IUnitofWork, UnitofWork>();

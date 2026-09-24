@@ -1,9 +1,13 @@
-/*
-    Por enquanto nn tenho a mínima ideia do que e pra que vou usar
-    
-    O código a baixo, é um exemplo do Chat GPT
-*/
+export interface RegisterRequest{
+    Nome:string
+    Email:string
+    Password:string
+}
 
+export interface RegisterResponse{
+    UserId:string
+    Token:string
+}
 
 export interface LoginRequest {
     email: string
@@ -11,7 +15,14 @@ export interface LoginRequest {
 }
 
 export interface LoginResponse {
+    sucess: boolean
+    status_code: number
     accessToken: string
     refreshToken: string
     expiresIn: number
+}
+
+export interface RefreshTokenRequest{
+    userid: string
+    refreshtoken: string
 }

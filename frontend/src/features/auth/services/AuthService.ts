@@ -37,22 +37,50 @@ types/
 */
 
 
-import type { LoginRequest, LoginResponse } from "../types/AuthTypes"
+import type { LoginRequest, LoginResponse, RefreshTokenRequest, RegisterRequest, RegisterResponse } from "../types/AuthTypes"
+import api from "../../../api/api"
 
-export async function login(
-  credentials: LoginRequest
-): Promise<LoginResponse> {
-  const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify(credentials)
+export async function Register(credentials:RegisterRequest) : Promise<RegisterResponse> {
+  const response = await api.post(`auth/register`,{
+    Nome:credentials.Nome,
+    Email:credentials.Email,
+    Password:credentials.Password
+  })
+  if(!response.data[0]){
+    throw new Error("Erro ao registrar")
+  }
+  return response.data
+}
+
+export async function login(credentials: LoginRequest): Promise<LoginResponse> {
+  const response = await api.post(`auth/login`, {
+    Email: credentials.email,
+    Password: credentials.password,
   })
 
-  if (!response.ok) {
+  if (!response.data[0]) {
+    console.error(response)
     throw new Error("Erro ao realizar login")
   }
+  return response.data()
+}
 
-  return response.json()
+export async function Refreshtoken(params: RefreshTokenRequest) {
+  const response = await api.post(`auth/refresh`,{
+    UserId: params.userid,
+    RefreshToken: params.refreshtoken
+  })
+
+  if(!response.data[0]){
+    throw new Error("Erro ao realizar atualizar Token")
+  }
+  return response.data
+}
+
+export async function Revoke(UserId:string) {
+  const response = await api.post(`auth/rovoke/${UserId}`)
+  if(!response.data[0]){
+    throw new Error("Erro ao realizar rovoke")
+  }
+  return response.data
 }

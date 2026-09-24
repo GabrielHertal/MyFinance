@@ -1,6 +1,8 @@
 import { useState} from "react"
-import { Login } from "../../../api/Auth/api"
-import { useNavigate } from "react-router-dom";
+import type { FormEvent } from "react";
+import { login } from "../services/AuthService";
+import type { LoginRequest } from "../types/AuthTypes";  
+import { useNavigate, type HTMLFormMethod } from "react-router-dom";
 
 export function Auth () {
     const [email, setEmail] = useState("")
@@ -9,30 +11,37 @@ export function Auth () {
     const [error, setError] = useState<Error | null>(null);
     const navigate = useNavigate();
 
-    const handleSubmit = async () => {
+    const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
         setLoading(true);
         setError(null);
+        
+        const request: LoginRequest = {
+           email,
+           password
+        }
         try
         {
-            const response = await Login(email,password);
-            if(response.status === 401)
+            const response = await login(request);
+            console.log(response)
+            if(response.status_code === 401)
             {
                 alert("Usuário ou senha inválidos!");
                 return;
             }
-            if(response.token === undefined)
+            if(response.accessToken === undefined)
             {
                 alert("Erro ao realizar login!");
                 return; 
             }
-            localStorage.setItem("AuthToken", response.token);
+            localStorage.setItem("AuthToken", response.accessToken);
         }
         catch(erro)
         {
             if(erro instanceof Error){
                 setError(erro);
             }
-            console.error(error);
+            console.error(erro);
             setLoading(false);
         }
         finally
@@ -46,7 +55,7 @@ export function Auth () {
         <main className="container min-vh-100 d-flex align-items-center justify-content-center">
             <div className="card shadow p-4" style={{ width: "100%", maxWidth: "420" }}>
                 <h1 className="h3 text-center mb-4">MyFinance</h1>
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} >
                     <div className="mb-3">
                         <label htmlFor="email" className="form-label">Email</label>
                         <input
