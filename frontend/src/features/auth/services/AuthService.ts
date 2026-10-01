@@ -46,9 +46,6 @@ export async function Register(credentials:RegisterRequest) : Promise<RegisterRe
     Email:credentials.Email,
     Password:credentials.Password
   })
-  if(!response.data[0]){
-    throw new Error("Erro ao registrar")
-  }
   return response.data
 }
 
@@ -57,12 +54,7 @@ export async function login(credentials: LoginRequest): Promise<LoginResponse> {
     Email: credentials.email,
     Password: credentials.password,
   })
-
-  if (!response.data[0]) {
-    console.error(response)
-    throw new Error("Erro ao realizar login")
-  }
-  return response.data()
+  return response.data
 }
 
 export async function Refreshtoken(params: RefreshTokenRequest) {
@@ -70,17 +62,10 @@ export async function Refreshtoken(params: RefreshTokenRequest) {
     UserId: params.userid,
     RefreshToken: params.refreshtoken
   })
-
-  if(!response.data[0]){
-    throw new Error("Erro ao realizar atualizar Token")
-  }
   return response.data
 }
 
 export async function Revoke(UserId:string) {
   const response = await api.post(`auth/rovoke/${UserId}`)
-  if(!response.data[0]){
-    throw new Error("Erro ao realizar rovoke")
-  }
   return response.data
 }
