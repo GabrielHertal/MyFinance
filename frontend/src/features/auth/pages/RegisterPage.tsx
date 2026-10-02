@@ -85,111 +85,92 @@ function Register() {
                                     </p>
                                 </div>
                                 {error && (
-                                    <div
-                                        className="alert alert-danger"
-                                        role="alert"
-                                    >
+                                    <div className="alert alert-danger" role="alert">
                                         <i className="bi bi-exclamation-circle me-2"></i>
                                         {error}
                                     </div>
                                 )}
                                 <form onSubmit={handleSubmit}>
                                     <div className="mb-3">
-                                        <label htmlFor="name"
-                                               className="form-label">
+                                        <label htmlFor="name" className="form-label">
                                             Nome
                                         </label>
                                         <div className="input-group">
                                             <span className="input-group-text">
                                                 <i className="bi bi-person"></i>
                                             </span>
-                                            <input
-                                                type="text"
-                                                id="name"
-                                                className="form-control"
-                                                placeholder="Seu nome completo"
-                                                value={name}
-                                                onChange={(e) =>
-                                                    setName(e.target.value)
-                                                }
-                                                required
-                                            />
+                                            <input type="text"
+                                                   id="name"
+                                                   className="form-control"
+                                                   placeholder="Seu nome completo"
+                                                   value={name}
+                                                   onChange={(e) =>
+                                                       setName(e.target.value)
+                                                   }
+                                                   required /> 
                                         </div>
                                     </div>
                                     <div className="mb-3">
-                                        <label htmlFor="email"
-                                               className="form-label">
+                                        <label htmlFor="email" className="form-label">
                                             E-mail
                                         </label>
                                         <div className="input-group">
                                             <span className="input-group-text">
                                                 <i className="bi bi-envelope"></i>
                                             </span>
-                                            <input
-                                                type="email"
-                                                id="email"
-                                                className="form-control"
-                                                placeholder="seu@email.com"
-                                                value={email}
-                                                onChange={(e) =>
-                                                    setEmail(e.target.value)
-                                                }
-                                                required/>
+                                            <input type="email"
+                                                   id="email"
+                                                   className="form-control"
+                                                   placeholder="seu@email.com"
+                                                   value={email}
+                                                   onChange={(e) =>
+                                                       setEmail(e.target.value)
+                                                   }
+                                                   required/>
                                         </div>
                                     </div>
                                     <div className="mb-2">
-                                        <label
-                                            htmlFor="password"
-                                            className="form-label">
+                                        <label htmlFor="password" className="form-label">
                                             Senha
                                         </label>
                                         <div className="input-group">
                                             <span className="input-group-text">
                                                 <i className="bi bi-lock"></i>
                                             </span>
-                                            <input
-                                                type={
-                                                    showPassword
-                                                        ? "text"
-                                                        : "password"
-                                                }
-                                                id="password"
-                                                className="form-control"
-                                                placeholder="Crie uma senha"
-                                                value={password}
-                                                onChange={(e) =>
-                                                    setPassword(e.target.value)
-                                                }
-                                                minLength={6}
-                                                required
-                                            />
-                                            <button
-                                                type="button"
-                                                className="btn btn-outline-secondary"
-                                                onClick={() =>
-                                                    setShowPassword(
-                                                        !showPassword
-                                                    )
-                                                }
-                                            >
-                                                <i
-                                                    className={`bi ${
+                                            <input type={
+                                                     showPassword
+                                                     ? "text"
+                                                     : "password"
+                                                   }
+                                                   id="password"
+                                                   className="form-control"
+                                                   placeholder="Crie uma senha"
+                                                   value={password}
+                                                   onChange={(e) =>
+                                                       setPassword(e.target.value)
+                                                   }
+                                                   minLength={6}
+                                                   required/>
+                                            <button type="button"
+                                                    className="btn btn-outline-secondary"
+                                                    onClick={() =>
+                                                        setShowPassword(
+                                                            !showPassword
+                                                        )
+                                                    }>   
+                                                <i className={`bi ${
                                                         showPassword
                                                             ? "bi-eye-slash"
                                                             : "bi-eye"
-                                                    }`}
-                                                ></i>
+                                                    }`}>
+                                                </i>
                                             </button>
                                         </div>
                                     </div>
                                     <div className="form-text mb-4">
                                         Mínimo de 6 caracteres.
                                     </div>
-                                    <button
-                                        type="submit"
-                                        className="btn btn-primary w-100 py-2 fw-semibold"
-                                        disabled={loading}
-                                    >
+                                    <button type="submit" className="btn btn-primary w-100 py-2 fw-semibold" disabled={loading}>
                                         {loading ? (
                                             <>
                                                 <span className="spinner-border spinner-border-sm me-2"></span>
@@ -207,10 +188,7 @@ function Register() {
                                     <span className="text-secondary">
                                         Já possui uma conta?
                                     </span>
-                                    <Link
-                                        to="/"
-                                        className="text-primary text-decoration-none fw-semibold ms-1"
-                                    >
+                                    <Link to="/" className="text-primary text-decoration-none fw-semibold ms-1">
                                         Entrar
                                     </Link>
                                 </div>
